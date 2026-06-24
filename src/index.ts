@@ -8,7 +8,10 @@ import { logger } from './utils/logger.js';
 
 const PORT = parseInt(process.env.PORT ?? '3001', 10);
 const HOST = process.env.HOST ?? '0.0.0.0';
-const CORS_ORIGIN = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
+const CORS_ORIGINS = (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 const RATE_LIMIT_MAX = parseInt(process.env.RATE_LIMIT_MAX ?? '100', 10);
 const RATE_LIMIT_TIME_WINDOW = parseInt(process.env.RATE_LIMIT_TIME_WINDOW ?? '60000', 10);
 
@@ -19,7 +22,7 @@ async function buildApp() {
   });
 
   await fastify.register(cors, {
-    origin: CORS_ORIGIN,
+    origin: CORS_ORIGINS.length === 1 ? CORS_ORIGINS[0] : CORS_ORIGINS,
     methods: ['GET', 'POST', 'OPTIONS'],
   });
 

@@ -2,7 +2,7 @@ import { validateUrlForSSRF } from '../utils/ssrf.js';
 import { logger } from '../utils/logger.js';
 import type { ExecuteRequest, ExecuteResponseData } from '../types/index.js';
 
-const REQUEST_TIMEOUT_MS = 30_000;
+const REQUEST_TIMEOUT_MS = 25_000;
 const MAX_RESPONSE_SIZE_BYTES = 10 * 1024 * 1024;
 
 const METHODS_WITHOUT_BODY = new Set(['GET', 'HEAD']);
